@@ -1,10 +1,10 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class Form1
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class EditStudentForm
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()>
-    Protected Overrides Sub Dispose(disposing As Boolean)
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
                 components.Dispose()
@@ -20,10 +20,10 @@ Partial Class Form1
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()>
+    <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         TableLayoutPanel1 = New TableLayoutPanel()
-        btnRegister = New Button()
+        btnSave = New Button()
         btnClear = New Button()
         cmbCategory = New ComboBox()
         category = New Label()
@@ -45,24 +45,18 @@ Partial Class Form1
         cmbSuffix = New ComboBox()
         Label2 = New Label()
         mtbStudentID = New MaskedTextBox()
-        DataGridView1 = New DataGridView()
-        btnRemove = New Button()
-        btnEdit = New Button()
-        btnReload = New Button()
-        btnSave = New Button()
         TableLayoutPanel1.SuspendLayout()
-        CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' TableLayoutPanel1
         ' 
         TableLayoutPanel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         TableLayoutPanel1.ColumnCount = 4
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 25.0F))
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 25.0F))
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 25.0F))
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 25.0F))
-        TableLayoutPanel1.Controls.Add(btnRegister, 2, 7)
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 25F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 25F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 25F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 25F))
+        TableLayoutPanel1.Controls.Add(btnSave, 2, 7)
         TableLayoutPanel1.Controls.Add(btnClear, 3, 7)
         TableLayoutPanel1.Controls.Add(cmbCategory, 0, 6)
         TableLayoutPanel1.Controls.Add(category, 0, 5)
@@ -84,6 +78,7 @@ Partial Class Form1
         TableLayoutPanel1.Controls.Add(cmbSuffix, 3, 2)
         TableLayoutPanel1.Controls.Add(Label2, 0, 7)
         TableLayoutPanel1.Controls.Add(mtbStudentID, 0, 4)
+        TableLayoutPanel1.Dock = DockStyle.Fill
         TableLayoutPanel1.Location = New Point(0, 0)
         TableLayoutPanel1.Name = "TableLayoutPanel1"
         TableLayoutPanel1.RowCount = 8
@@ -95,22 +90,22 @@ Partial Class Form1
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 11.5740757F))
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 11.5740757F))
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 11.5740719F))
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Absolute, 20.0F))
-        TableLayoutPanel1.Size = New Size(460, 563)
-        TableLayoutPanel1.TabIndex = 0
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Absolute, 20F))
+        TableLayoutPanel1.Size = New Size(800, 450)
+        TableLayoutPanel1.TabIndex = 1
         ' 
-        ' btnRegister
+        ' btnSave
         ' 
-        btnRegister.BackColor = Color.IndianRed
-        btnRegister.Dock = DockStyle.Fill
-        btnRegister.FlatStyle = FlatStyle.Popup
-        btnRegister.ForeColor = SystemColors.ActiveCaptionText
-        btnRegister.Location = New Point(233, 499)
-        btnRegister.Name = "btnRegister"
-        btnRegister.Size = New Size(109, 61)
-        btnRegister.TabIndex = 22
-        btnRegister.Text = "Register"
-        btnRegister.UseVisualStyleBackColor = False
+        btnSave.BackColor = Color.DarkSeaGreen
+        btnSave.Dock = DockStyle.Fill
+        btnSave.FlatStyle = FlatStyle.Popup
+        btnSave.ForeColor = SystemColors.ActiveCaptionText
+        btnSave.Location = New Point(403, 400)
+        btnSave.Name = "btnSave"
+        btnSave.Size = New Size(194, 47)
+        btnSave.TabIndex = 22
+        btnSave.Text = "Save"
+        btnSave.UseVisualStyleBackColor = False
         ' 
         ' btnClear
         ' 
@@ -118,9 +113,9 @@ Partial Class Form1
         btnClear.Dock = DockStyle.Fill
         btnClear.FlatStyle = FlatStyle.Popup
         btnClear.ForeColor = SystemColors.ActiveCaptionText
-        btnClear.Location = New Point(348, 499)
+        btnClear.Location = New Point(603, 400)
         btnClear.Name = "btnClear"
-        btnClear.Size = New Size(109, 61)
+        btnClear.Size = New Size(194, 47)
         btnClear.TabIndex = 1
         btnClear.Text = "Clear"
         btnClear.UseVisualStyleBackColor = False
@@ -132,9 +127,9 @@ Partial Class Form1
         cmbCategory.DropDownStyle = ComboBoxStyle.DropDownList
         cmbCategory.FormattingEnabled = True
         cmbCategory.Items.AddRange(New Object() {"Interskills", "Esports", "Sports", "Others"})
-        cmbCategory.Location = New Point(3, 434)
+        cmbCategory.Location = New Point(3, 348)
         cmbCategory.Name = "cmbCategory"
-        cmbCategory.Size = New Size(454, 23)
+        cmbCategory.Size = New Size(794, 23)
         cmbCategory.TabIndex = 19
         ' 
         ' category
@@ -142,7 +137,7 @@ Partial Class Form1
         category.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
         category.AutoSize = True
         category.Font = New Font("Segoe UI", 9.75F)
-        category.Location = New Point(3, 414)
+        category.Location = New Point(3, 328)
         category.Name = "category"
         category.Size = New Size(66, 17)
         category.TabIndex = 18
@@ -155,9 +150,9 @@ Partial Class Form1
         cmbSection.DropDownStyle = ComboBoxStyle.DropDownList
         cmbSection.FormattingEnabled = True
         cmbSection.Items.AddRange(New Object() {"A", "B", "C"})
-        cmbSection.Location = New Point(348, 304)
+        cmbSection.Location = New Point(603, 244)
         cmbSection.Name = "cmbSection"
-        cmbSection.Size = New Size(109, 23)
+        cmbSection.Size = New Size(194, 23)
         cmbSection.TabIndex = 16
         ' 
         ' cmbYear
@@ -166,9 +161,9 @@ Partial Class Form1
         cmbYear.DropDownStyle = ComboBoxStyle.DropDownList
         cmbYear.FormattingEnabled = True
         cmbYear.Items.AddRange(New Object() {"1", "2", "3", "4"})
-        cmbYear.Location = New Point(233, 304)
+        cmbYear.Location = New Point(403, 244)
         cmbYear.Name = "cmbYear"
-        cmbYear.Size = New Size(109, 23)
+        cmbYear.Size = New Size(194, 23)
         cmbYear.TabIndex = 15
         ' 
         ' cmbProgram
@@ -177,9 +172,9 @@ Partial Class Form1
         cmbProgram.DropDownStyle = ComboBoxStyle.DropDownList
         cmbProgram.FormattingEnabled = True
         cmbProgram.Items.AddRange(New Object() {"BSCS", "BSIS", "BSEMC", "BSIT"})
-        cmbProgram.Location = New Point(118, 304)
+        cmbProgram.Location = New Point(203, 244)
         cmbProgram.Name = "cmbProgram"
-        cmbProgram.Size = New Size(109, 23)
+        cmbProgram.Size = New Size(194, 23)
         cmbProgram.TabIndex = 14
         ' 
         ' section
@@ -187,9 +182,9 @@ Partial Class Form1
         section.AutoSize = True
         section.Dock = DockStyle.Left
         section.Font = New Font("Segoe UI", 9.75F)
-        section.Location = New Point(348, 236)
+        section.Location = New Point(603, 189)
         section.Name = "section"
-        section.Size = New Size(55, 65)
+        section.Size = New Size(55, 52)
         section.TabIndex = 12
         section.Text = "*Section"
         section.TextAlign = ContentAlignment.BottomCenter
@@ -199,9 +194,9 @@ Partial Class Form1
         year.AutoSize = True
         year.Dock = DockStyle.Left
         year.Font = New Font("Segoe UI", 9.75F)
-        year.Location = New Point(233, 236)
+        year.Location = New Point(403, 189)
         year.Name = "year"
-        year.Size = New Size(38, 65)
+        year.Size = New Size(38, 52)
         year.TabIndex = 11
         year.Text = "*Year"
         year.TextAlign = ContentAlignment.BottomCenter
@@ -211,9 +206,9 @@ Partial Class Form1
         program.AutoSize = True
         program.Dock = DockStyle.Left
         program.Font = New Font("Segoe UI", 9.75F)
-        program.Location = New Point(118, 236)
+        program.Location = New Point(203, 189)
         program.Name = "program"
-        program.Size = New Size(64, 65)
+        program.Size = New Size(64, 52)
         program.TabIndex = 10
         program.Text = "*Program"
         program.TextAlign = ContentAlignment.BottomCenter
@@ -223,9 +218,9 @@ Partial Class Form1
         studentNo.AutoSize = True
         studentNo.Dock = DockStyle.Left
         studentNo.Font = New Font("Segoe UI", 9.75F)
-        studentNo.Location = New Point(3, 236)
+        studentNo.Location = New Point(3, 189)
         studentNo.Name = "studentNo"
-        studentNo.Size = New Size(82, 65)
+        studentNo.Size = New Size(82, 52)
         studentNo.TabIndex = 9
         studentNo.Text = "*Student No."
         studentNo.TextAlign = ContentAlignment.BottomCenter
@@ -233,17 +228,17 @@ Partial Class Form1
         ' txtMiddleName
         ' 
         txtMiddleName.Dock = DockStyle.Fill
-        txtMiddleName.Location = New Point(233, 174)
+        txtMiddleName.Location = New Point(403, 140)
         txtMiddleName.Name = "txtMiddleName"
-        txtMiddleName.Size = New Size(109, 23)
+        txtMiddleName.Size = New Size(194, 23)
         txtMiddleName.TabIndex = 7
         ' 
         ' txtFirstName
         ' 
         txtFirstName.Dock = DockStyle.Fill
-        txtFirstName.Location = New Point(118, 174)
+        txtFirstName.Location = New Point(203, 140)
         txtFirstName.Name = "txtFirstName"
-        txtFirstName.Size = New Size(109, 23)
+        txtFirstName.Size = New Size(194, 23)
         txtFirstName.TabIndex = 6
         ' 
         ' suffix
@@ -251,9 +246,9 @@ Partial Class Form1
         suffix.AutoSize = True
         suffix.Dock = DockStyle.Left
         suffix.Font = New Font("Segoe UI", 9.75F)
-        suffix.Location = New Point(348, 106)
+        suffix.Location = New Point(603, 85)
         suffix.Name = "suffix"
-        suffix.Size = New Size(39, 65)
+        suffix.Size = New Size(39, 52)
         suffix.TabIndex = 4
         suffix.Text = "Suffix"
         suffix.TextAlign = ContentAlignment.BottomCenter
@@ -263,9 +258,9 @@ Partial Class Form1
         middleName.AutoSize = True
         middleName.Dock = DockStyle.Left
         middleName.Font = New Font("Segoe UI", 9.75F)
-        middleName.Location = New Point(233, 106)
+        middleName.Location = New Point(403, 85)
         middleName.Name = "middleName"
-        middleName.Size = New Size(88, 65)
+        middleName.Size = New Size(88, 52)
         middleName.TabIndex = 3
         middleName.Text = "Middle Name"
         middleName.TextAlign = ContentAlignment.BottomCenter
@@ -275,9 +270,9 @@ Partial Class Form1
         firstName.AutoSize = True
         firstName.Dock = DockStyle.Left
         firstName.Font = New Font("Segoe UI", 9.75F)
-        firstName.Location = New Point(118, 106)
+        firstName.Location = New Point(203, 85)
         firstName.Name = "firstName"
-        firstName.Size = New Size(76, 65)
+        firstName.Size = New Size(76, 52)
         firstName.TabIndex = 2
         firstName.Text = "*First Name"
         firstName.TextAlign = ContentAlignment.BottomCenter
@@ -287,9 +282,9 @@ Partial Class Form1
         lastName.AutoSize = True
         lastName.Dock = DockStyle.Left
         lastName.Font = New Font("Segoe UI", 9.75F)
-        lastName.Location = New Point(3, 106)
+        lastName.Location = New Point(3, 85)
         lastName.Name = "lastName"
-        lastName.Size = New Size(75, 65)
+        lastName.Size = New Size(75, 52)
         lastName.TabIndex = 1
         lastName.Text = "*Last Name"
         lastName.TextAlign = ContentAlignment.BottomCenter
@@ -299,20 +294,20 @@ Partial Class Form1
         Label1.AutoSize = True
         TableLayoutPanel1.SetColumnSpan(Label1, 4)
         Label1.Dock = DockStyle.Fill
-        Label1.Font = New Font("Microsoft Sans Serif", 18.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label1.Font = New Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label1.Location = New Point(3, 0)
         Label1.Name = "Label1"
-        Label1.Size = New Size(454, 106)
+        Label1.Size = New Size(794, 85)
         Label1.TabIndex = 0
-        Label1.Text = "CSD FAIR REGISTRATION"
+        Label1.Text = "EDIT FORM"
         Label1.TextAlign = ContentAlignment.MiddleCenter
         ' 
         ' txtLastName
         ' 
         txtLastName.Dock = DockStyle.Fill
-        txtLastName.Location = New Point(3, 174)
+        txtLastName.Location = New Point(3, 140)
         txtLastName.Name = "txtLastName"
-        txtLastName.Size = New Size(109, 23)
+        txtLastName.Size = New Size(194, 23)
         txtLastName.TabIndex = 5
         ' 
         ' cmbSuffix
@@ -321,9 +316,9 @@ Partial Class Form1
         cmbSuffix.DropDownStyle = ComboBoxStyle.DropDownList
         cmbSuffix.FormattingEnabled = True
         cmbSuffix.Items.AddRange(New Object() {"", "Jr.", "Sr.", "III.", "IV.", "V."})
-        cmbSuffix.Location = New Point(348, 174)
+        cmbSuffix.Location = New Point(603, 140)
         cmbSuffix.Name = "cmbSuffix"
-        cmbSuffix.Size = New Size(109, 23)
+        cmbSuffix.Size = New Size(194, 23)
         cmbSuffix.TabIndex = 8
         ' 
         ' Label2
@@ -331,94 +326,46 @@ Partial Class Form1
         Label2.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         Label2.AutoSize = True
         TableLayoutPanel1.SetColumnSpan(Label2, 2)
-        Label2.Location = New Point(3, 496)
+        Label2.Location = New Point(3, 397)
         Label2.Name = "Label2"
-        Label2.Size = New Size(224, 67)
+        Label2.Size = New Size(394, 53)
         Label2.TabIndex = 20
         Label2.TextAlign = ContentAlignment.MiddleCenter
         ' 
         ' mtbStudentID
         ' 
-        mtbStudentID.Location = New Point(3, 303)
+        mtbStudentID.Location = New Point(3, 243)
         mtbStudentID.Margin = New Padding(3, 2, 3, 2)
         mtbStudentID.Mask = "00000000-L"
         mtbStudentID.Name = "mtbStudentID"
         mtbStudentID.Size = New Size(78, 23)
         mtbStudentID.TabIndex = 21
         ' 
-        ' DataGridView1
+        ' EditStudentForm
         ' 
-        DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.Location = New Point(466, 0)
-        DataGridView1.Name = "DataGridView1"
-        DataGridView1.Size = New Size(718, 499)
-        DataGridView1.TabIndex = 1
-        ' 
-        ' btnRemove
-        ' 
-        btnRemove.Location = New Point(466, 505)
-        btnRemove.Name = "btnRemove"
-        btnRemove.Size = New Size(114, 50)
-        btnRemove.TabIndex = 2
-        btnRemove.Text = "Remove"
-        btnRemove.UseVisualStyleBackColor = True
-        ' 
-        ' btnEdit
-        ' 
-        btnEdit.Location = New Point(586, 505)
-        btnEdit.Name = "btnEdit"
-        btnEdit.Size = New Size(114, 50)
-        btnEdit.TabIndex = 3
-        btnEdit.Text = "Edit"
-        btnEdit.UseVisualStyleBackColor = True
-        ' 
-        ' btnReload
-        ' 
-        btnReload.Location = New Point(1070, 504)
-        btnReload.Name = "btnReload"
-        btnReload.Size = New Size(114, 50)
-        btnReload.TabIndex = 4
-        btnReload.Text = "Reload"
-        btnReload.UseVisualStyleBackColor = True
-        ' 
-        ' btnSave
-        ' 
-        btnSave.Location = New Point(706, 505)
-        btnSave.Name = "btnSave"
-        btnSave.Size = New Size(114, 50)
-        btnSave.TabIndex = 5
-        btnSave.Text = "Save"
-        btnSave.UseVisualStyleBackColor = True
-        ' 
-        ' Form1
-        ' 
-        AcceptButton = btnRegister
-        AutoScaleDimensions = New SizeF(96.0F, 96.0F)
-        AutoScaleMode = AutoScaleMode.Dpi
-        AutoSize = True
-        CancelButton = btnClear
-        ClientSize = New Size(1184, 561)
-        Controls.Add(btnSave)
-        Controls.Add(btnReload)
-        Controls.Add(btnEdit)
-        Controls.Add(btnRemove)
-        Controls.Add(DataGridView1)
+        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleMode = AutoScaleMode.Font
+        ClientSize = New Size(800, 450)
         Controls.Add(TableLayoutPanel1)
-        KeyPreview = True
-        MaximizeBox = False
-        MaximumSize = New Size(1200, 600)
-        MinimumSize = New Size(1200, 600)
-        Name = "Form1"
-        ShowIcon = False
-        StartPosition = FormStartPosition.CenterScreen
-        Text = "Registration Form"
+        Name = "EditStudentForm"
+        Text = "EditStudentForm"
         TableLayoutPanel1.ResumeLayout(False)
         TableLayoutPanel1.PerformLayout()
-        CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
     End Sub
 
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents btnSave As Button
+    Friend WithEvents btnClear As Button
+    Friend WithEvents cmbCategory As ComboBox
+    Friend WithEvents category As Label
+    Friend WithEvents cmbSection As ComboBox
+    Friend WithEvents cmbYear As ComboBox
+    Friend WithEvents cmbProgram As ComboBox
+    Friend WithEvents section As Label
+    Friend WithEvents year As Label
+    Friend WithEvents program As Label
+    Friend WithEvents studentNo As Label
     Friend WithEvents txtMiddleName As TextBox
     Friend WithEvents txtFirstName As TextBox
     Friend WithEvents suffix As Label
@@ -427,24 +374,7 @@ Partial Class Form1
     Friend WithEvents lastName As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents txtLastName As TextBox
-    Friend WithEvents studentNo As Label
     Friend WithEvents cmbSuffix As ComboBox
-    Friend WithEvents cmbSection As ComboBox
-    Friend WithEvents cmbYear As ComboBox
-    Friend WithEvents cmbProgram As ComboBox
-    Friend WithEvents section As Label
-    Friend WithEvents year As Label
-    Friend WithEvents program As Label
-    Friend WithEvents cmbCategory As ComboBox
-    Friend WithEvents category As Label
-    Friend WithEvents btnClear As Button
     Friend WithEvents Label2 As Label
     Friend WithEvents mtbStudentID As MaskedTextBox
-    Friend WithEvents btnRegister As Button
-    Friend WithEvents DataGridView1 As DataGridView
-    Friend WithEvents btnRemove As Button
-    Friend WithEvents btnEdit As Button
-    Friend WithEvents btnReload As Button
-    Friend WithEvents btnSave As Button
-
 End Class

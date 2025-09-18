@@ -5,18 +5,46 @@ Imports System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel
 Public Class Form1
     Dim ConnectionString As String = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Eisen\OneDrive\Documents\FormRegistration.accdb"
     Dim conn As New OleDbConnection(ConnectionString)
+    Private AllowSpecialChars As Boolean = False
     Public Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         mtbStudentID.Select(0, 0)
         LoadStudentData()
         DataGridView1.ReadOnly = True
         DataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-
     End Sub
 
+    Private Function IsValidName(input As String) As Boolean
+        If AllowSpecialChars Then
+            ' If checkbox is checked, allow ANY characters (still disallow empty string)
+            Return input.Trim() <> ""
+        Else
+            ' Default: only letters, spaces, hyphens, and apostrophes
+            For Each ch As Char In input
+                If Not (Char.IsLetter(ch) Or ch = " "c Or ch = "-"c Or ch = "'"c) Then
+                    Return False
+                End If
+            Next
+            Return True
+        End If
+    End Function
+
     Private Sub btnRegister_Click(sender As Object, e As EventArgs) Handles btnRegister.Click
-        ' Basic validation
-        If txtFirstName.Text = "" Or txtLastName.Text = "" Or mtbStudentID.Text = "" Or cmbProgram.Text = "" Or cmbYear.Text = "" Or cmbSection.Text = "" Then
-            MessageBox.Show("Please fill in all the required fields.")
+        ' Basic empty field validation
+        If txtFirstName.Text.Trim = "" OrElse txtLastName.Text.Trim = "" OrElse mtbStudentID.Text.Trim = "" OrElse cmbProgram.Text.Trim = "" OrElse cmbYear.Text.Trim = "" OrElse cmbSection.Text.Trim = "" Then
+            MessageBox.Show("Please fill in all the required fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        ' Validate name fields
+        If Not IsValidName(txtFirstName.Text) Then
+            MessageBox.Show("First name is not valid based on current validation rules.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txtFirstName.Focus()
+            Return
+        End If
+
+        If Not IsValidName(txtLastName.Text) Then
+            MessageBox.Show("Last name is not valid based on current validation rules.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txtLastName.Focus()
             Return
         End If
 
@@ -52,15 +80,14 @@ Public Class Form1
                     cmd.Parameters.AddWithValue("@Section", cmbSection.Text)
                     cmd.Parameters.AddWithValue("@Category", cmbCategory.Text)
 
-                    Dim debugSql = queryInsert
-                    For Each p As OleDbParameter In cmd.Parameters
-                        debugSql = debugSql.Replace(p.ParameterName, "'" & p.Value.ToString & "'")
-                    Next
-                    MessageBox.Show(debugSql)
+                    ' Dim debugSql = queryInsert
+                    'For Each p As OleDbParameter In cmd.Parameters
+                    'debugSql = debugSql.Replace(p.ParameterName, "'" & p.Value.ToString & "'")
+                    'Next
+                    'MessageBox.Show(debugSql)
 
 
                     Dim row = cmd.ExecuteNonQuery
-                    MessageBox.Show("ExecuteNonQuery result: " & row)
 
                     If row > 0 Then
                         Label2.Text = "Registration Completed!"
@@ -72,6 +99,16 @@ Public Class Form1
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message & vbCrLf & ex.StackTrace)
         End Try
+        LoadStudentData()
+        txtFirstName.Text = ""
+        txtLastName.Text = ""
+        txtMiddleName.Text = ""
+        mtbStudentID.Text = ""
+        cmbProgram.SelectedIndex = -1
+        cmbYear.SelectedIndex = -1
+        cmbSection.SelectedIndex = -1
+        cmbSuffix.SelectedIndex = -1
+        cmbCategory.SelectedIndex = -1
     End Sub
 
 
@@ -91,10 +128,10 @@ Public Class Form1
     Private Sub LoadStudentData()
         Try
             conn.Open()
-
-            ' Select all individual columns for editing
-            Dim sql As String = "SELECT StudentID, FirstName, MiddleName, LastName, Suffix, Program, YearLevel AS [Year], Section, Category " &
-                            "FROM CSD"
+            Dim sql As String = "SELECT StudentID, " &
+                                "(FirstName & ' ' & MiddleName & ' ' & LastName & ' ' & Suffix) AS FullName, " &
+                                "Program, YearLevel AS [Year], Section, Category " &
+                                "FROM CSD"
 
             Dim adapter As New OleDbDataAdapter(sql, conn)
             Dim dt As New DataTable()
@@ -105,14 +142,15 @@ Public Class Form1
             ' Make columns auto resize and fill available space
             DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
             DataGridView1.AutoResizeColumns()
+
+            ' Adjust column widths (remove old FirstName/MiddleName/LastName since now it’s combined)
             DataGridView1.Columns("StudentID").FillWeight = 100
-            DataGridView1.Columns("FirstName").FillWeight = 120
-            DataGridView1.Columns("MiddleName").FillWeight = 120
-            DataGridView1.Columns("LastName").FillWeight = 120
-            DataGridView1.Columns("Program").FillWeight = 100
-            DataGridView1.Columns("Year").FillWeight = 60
+            DataGridView1.Columns("FullName").FillWeight = 200
+            DataGridView1.Columns("Program").FillWeight = 80
+            DataGridView1.Columns("Year").FillWeight = 40
             DataGridView1.Columns("Section").FillWeight = 60
-            DataGridView1.Columns("Category").FillWeight = 100
+            DataGridView1.Columns("Category").FillWeight = 80
+
 
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message)
@@ -122,12 +160,12 @@ Public Class Form1
     End Sub
 
 
-    ' ✅ Reload Button
+    ' Reload Button
     Private Sub btnReload_Click(sender As Object, e As EventArgs) Handles btnReload.Click
         LoadStudentData()
     End Sub
 
-    ' ✅ Remove Button
+    '  Remove Button
     Private Sub btnRemove_Click(sender As Object, e As EventArgs) Handles btnRemove.Click
         If DataGridView1.SelectedRows.Count > 0 Then
             Dim studentID As String = DataGridView1.SelectedRows(0).Cells("StudentID").Value.ToString()
@@ -157,7 +195,7 @@ Public Class Form1
         LoadStudentData() ' Refresh grid
     End Sub
 
-    ' ✅ Edit Button (example: update Program & Section)
+    ' Edit Button
     Private Sub btnEdit_Click(sender As Object, e As EventArgs) Handles btnEdit.Click
         ' Make sure a row is selected
         If DataGridView1.SelectedRows.Count = 0 Then
@@ -179,7 +217,7 @@ Public Class Form1
 
 
 
-    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+    Private Sub btnSave_Click(sender As Object, e As EventArgs)
         Try
             conn.Open()
 
@@ -187,22 +225,22 @@ Public Class Form1
                 ' Skip the new row placeholder
                 If row.IsNewRow Then Continue For
 
-                Dim studentID As String = row.Cells("StudentID").Value.ToString()
-                Dim firstName As String = row.Cells("FirstName").Value.ToString()
-                Dim lastName As String = row.Cells("LastName").Value.ToString()
-                Dim middleName As String = row.Cells("MiddleName").Value.ToString()
-                Dim suffix As String = row.Cells("Suffix").Value.ToString()
-                Dim program As String = row.Cells("Program").Value.ToString()
-                Dim yearLevel As String = row.Cells("Year").Value.ToString()
-                Dim section As String = row.Cells("Section").Value.ToString()
-                Dim category As String = row.Cells("Category").Value.ToString()
+                Dim studentID = row.Cells("StudentID").Value.ToString
+                Dim firstName = row.Cells("FirstName").Value.ToString
+                Dim lastName = row.Cells("LastName").Value.ToString
+                Dim middleName = row.Cells("MiddleName").Value.ToString
+                Dim suffix = row.Cells("Suffix").Value.ToString
+                Dim program = row.Cells("Program").Value.ToString
+                Dim yearLevel = row.Cells("Year").Value.ToString
+                Dim section = row.Cells("Section").Value.ToString
+                Dim category = row.Cells("Category").Value.ToString
 
                 ' Optional: Skip rows with empty critical fields
                 If String.IsNullOrWhiteSpace(firstName) Or String.IsNullOrWhiteSpace(lastName) Then
                     Continue For
                 End If
 
-                Dim sql As String = "UPDATE CSD SET [FirstName]=?, [LastName]=?, [MiddleName]=?, [Suffix]=?, [Program]=?, [YearLevel]=?, [Section]=?, [Category]=? WHERE [StudentID]=?"
+                Dim sql = "UPDATE CSD SET [FirstName]=?, [LastName]=?, [MiddleName]=?, [Suffix]=?, [Program]=?, [YearLevel]=?, [Section]=?, [Category]=? WHERE [StudentID]=?"
                 Using cmd As New OleDbCommand(sql, conn)
                     cmd.Parameters.Add("?", OleDbType.VarChar).Value = firstName
                     cmd.Parameters.Add("?", OleDbType.VarChar).Value = lastName
@@ -230,5 +268,7 @@ Public Class Form1
         LoadStudentData() ' Refresh grid
     End Sub
 
-
+    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
+        AllowSpecialChars = CheckBox1.Checked
+    End Sub
 End Class

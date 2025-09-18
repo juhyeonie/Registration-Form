@@ -22,9 +22,11 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         TableLayoutPanel1 = New TableLayoutPanel()
-        btnRegister = New Button()
         btnClear = New Button()
+        btnRegister = New Button()
+        Label3 = New Label()
         cmbCategory = New ComboBox()
         category = New Label()
         cmbSection = New ComboBox()
@@ -33,7 +35,6 @@ Partial Class Form1
         section = New Label()
         year = New Label()
         program = New Label()
-        studentNo = New Label()
         txtMiddleName = New TextBox()
         txtFirstName = New TextBox()
         suffix = New Label()
@@ -43,13 +44,13 @@ Partial Class Form1
         Label1 = New Label()
         txtLastName = New TextBox()
         cmbSuffix = New ComboBox()
-        Label2 = New Label()
         mtbStudentID = New MaskedTextBox()
+        CheckBox1 = New CheckBox()
+        Label2 = New Label()
         DataGridView1 = New DataGridView()
         btnRemove = New Button()
         btnEdit = New Button()
         btnReload = New Button()
-        btnSave = New Button()
         TableLayoutPanel1.SuspendLayout()
         CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -58,12 +59,13 @@ Partial Class Form1
         ' 
         TableLayoutPanel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         TableLayoutPanel1.ColumnCount = 4
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 25.0F))
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 25.0F))
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 25.0F))
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 25.0F))
-        TableLayoutPanel1.Controls.Add(btnRegister, 2, 7)
-        TableLayoutPanel1.Controls.Add(btnClear, 3, 7)
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 25F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 25F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 25F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 25F))
+        TableLayoutPanel1.Controls.Add(btnClear, 2, 7)
+        TableLayoutPanel1.Controls.Add(btnRegister, 3, 7)
+        TableLayoutPanel1.Controls.Add(Label3, 0, 3)
         TableLayoutPanel1.Controls.Add(cmbCategory, 0, 6)
         TableLayoutPanel1.Controls.Add(category, 0, 5)
         TableLayoutPanel1.Controls.Add(cmbSection, 3, 4)
@@ -72,7 +74,6 @@ Partial Class Form1
         TableLayoutPanel1.Controls.Add(section, 3, 3)
         TableLayoutPanel1.Controls.Add(year, 2, 3)
         TableLayoutPanel1.Controls.Add(program, 1, 3)
-        TableLayoutPanel1.Controls.Add(studentNo, 0, 3)
         TableLayoutPanel1.Controls.Add(txtMiddleName, 2, 2)
         TableLayoutPanel1.Controls.Add(txtFirstName, 1, 2)
         TableLayoutPanel1.Controls.Add(suffix, 3, 1)
@@ -82,8 +83,8 @@ Partial Class Form1
         TableLayoutPanel1.Controls.Add(Label1, 0, 0)
         TableLayoutPanel1.Controls.Add(txtLastName, 0, 2)
         TableLayoutPanel1.Controls.Add(cmbSuffix, 3, 2)
-        TableLayoutPanel1.Controls.Add(Label2, 0, 7)
         TableLayoutPanel1.Controls.Add(mtbStudentID, 0, 4)
+        TableLayoutPanel1.Controls.Add(CheckBox1, 0, 7)
         TableLayoutPanel1.Location = New Point(0, 0)
         TableLayoutPanel1.Name = "TableLayoutPanel1"
         TableLayoutPanel1.RowCount = 8
@@ -95,56 +96,71 @@ Partial Class Form1
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 11.5740757F))
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 11.5740757F))
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 11.5740719F))
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Absolute, 20.0F))
-        TableLayoutPanel1.Size = New Size(460, 563)
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Absolute, 20F))
+        TableLayoutPanel1.Size = New Size(457, 267)
         TableLayoutPanel1.TabIndex = 0
-        ' 
-        ' btnRegister
-        ' 
-        btnRegister.BackColor = Color.IndianRed
-        btnRegister.Dock = DockStyle.Fill
-        btnRegister.FlatStyle = FlatStyle.Popup
-        btnRegister.ForeColor = SystemColors.ActiveCaptionText
-        btnRegister.Location = New Point(233, 499)
-        btnRegister.Name = "btnRegister"
-        btnRegister.Size = New Size(109, 61)
-        btnRegister.TabIndex = 22
-        btnRegister.Text = "Register"
-        btnRegister.UseVisualStyleBackColor = False
         ' 
         ' btnClear
         ' 
         btnClear.BackColor = Color.White
         btnClear.Dock = DockStyle.Fill
         btnClear.FlatStyle = FlatStyle.Popup
+        btnClear.Font = New Font("Poppins", 9F)
         btnClear.ForeColor = SystemColors.ActiveCaptionText
-        btnClear.Location = New Point(348, 499)
+        btnClear.Location = New Point(231, 233)
         btnClear.Name = "btnClear"
-        btnClear.Size = New Size(109, 61)
-        btnClear.TabIndex = 1
+        btnClear.Size = New Size(108, 31)
+        btnClear.TabIndex = 30
         btnClear.Text = "Clear"
         btnClear.UseVisualStyleBackColor = False
+        ' 
+        ' btnRegister
+        ' 
+        btnRegister.BackColor = Color.IndianRed
+        btnRegister.Dock = DockStyle.Fill
+        btnRegister.FlatStyle = FlatStyle.Popup
+        btnRegister.Font = New Font("Poppins", 9F)
+        btnRegister.ForeColor = SystemColors.ActiveCaptionText
+        btnRegister.Location = New Point(345, 233)
+        btnRegister.Name = "btnRegister"
+        btnRegister.Size = New Size(109, 31)
+        btnRegister.TabIndex = 29
+        btnRegister.Text = "Register"
+        btnRegister.UseVisualStyleBackColor = False
+        ' 
+        ' Label3
+        ' 
+        Label3.AutoSize = True
+        Label3.Dock = DockStyle.Left
+        Label3.Font = New Font("Poppins", 9.75F)
+        Label3.Location = New Point(3, 110)
+        Label3.Name = "Label3"
+        Label3.Size = New Size(90, 30)
+        Label3.TabIndex = 23
+        Label3.Text = "*Student No."
+        Label3.TextAlign = ContentAlignment.BottomCenter
         ' 
         ' cmbCategory
         ' 
         TableLayoutPanel1.SetColumnSpan(cmbCategory, 4)
         cmbCategory.Dock = DockStyle.Fill
         cmbCategory.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbCategory.Font = New Font("Poppins", 9F)
         cmbCategory.FormattingEnabled = True
         cmbCategory.Items.AddRange(New Object() {"Interskills", "Esports", "Sports", "Others"})
-        cmbCategory.Location = New Point(3, 434)
+        cmbCategory.Location = New Point(3, 203)
         cmbCategory.Name = "cmbCategory"
-        cmbCategory.Size = New Size(454, 23)
+        cmbCategory.Size = New Size(451, 30)
         cmbCategory.TabIndex = 19
         ' 
         ' category
         ' 
         category.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
         category.AutoSize = True
-        category.Font = New Font("Segoe UI", 9.75F)
-        category.Location = New Point(3, 414)
+        category.Font = New Font("Poppins", 9.75F)
+        category.Location = New Point(3, 177)
         category.Name = "category"
-        category.Size = New Size(66, 17)
+        category.Size = New Size(77, 23)
         category.TabIndex = 18
         category.Text = "*Category"
         category.TextAlign = ContentAlignment.BottomCenter
@@ -153,43 +169,46 @@ Partial Class Form1
         ' 
         cmbSection.Dock = DockStyle.Fill
         cmbSection.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbSection.Font = New Font("Poppins", 9F)
         cmbSection.FormattingEnabled = True
         cmbSection.Items.AddRange(New Object() {"A", "B", "C"})
-        cmbSection.Location = New Point(348, 304)
+        cmbSection.Location = New Point(345, 143)
         cmbSection.Name = "cmbSection"
-        cmbSection.Size = New Size(109, 23)
+        cmbSection.Size = New Size(109, 30)
         cmbSection.TabIndex = 16
         ' 
         ' cmbYear
         ' 
         cmbYear.Dock = DockStyle.Fill
         cmbYear.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbYear.Font = New Font("Poppins", 9F)
         cmbYear.FormattingEnabled = True
         cmbYear.Items.AddRange(New Object() {"1", "2", "3", "4"})
-        cmbYear.Location = New Point(233, 304)
+        cmbYear.Location = New Point(231, 143)
         cmbYear.Name = "cmbYear"
-        cmbYear.Size = New Size(109, 23)
+        cmbYear.Size = New Size(108, 30)
         cmbYear.TabIndex = 15
         ' 
         ' cmbProgram
         ' 
         cmbProgram.Dock = DockStyle.Fill
         cmbProgram.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbProgram.Font = New Font("Poppins", 9F)
         cmbProgram.FormattingEnabled = True
         cmbProgram.Items.AddRange(New Object() {"BSCS", "BSIS", "BSEMC", "BSIT"})
-        cmbProgram.Location = New Point(118, 304)
+        cmbProgram.Location = New Point(117, 143)
         cmbProgram.Name = "cmbProgram"
-        cmbProgram.Size = New Size(109, 23)
+        cmbProgram.Size = New Size(108, 30)
         cmbProgram.TabIndex = 14
         ' 
         ' section
         ' 
+        section.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
         section.AutoSize = True
-        section.Dock = DockStyle.Left
-        section.Font = New Font("Segoe UI", 9.75F)
-        section.Location = New Point(348, 236)
+        section.Font = New Font("Poppins", 9.75F)
+        section.Location = New Point(345, 117)
         section.Name = "section"
-        section.Size = New Size(55, 65)
+        section.Size = New Size(64, 23)
         section.TabIndex = 12
         section.Text = "*Section"
         section.TextAlign = ContentAlignment.BottomCenter
@@ -198,10 +217,10 @@ Partial Class Form1
         ' 
         year.AutoSize = True
         year.Dock = DockStyle.Left
-        year.Font = New Font("Segoe UI", 9.75F)
-        year.Location = New Point(233, 236)
+        year.Font = New Font("Poppins", 9.75F)
+        year.Location = New Point(231, 110)
         year.Name = "year"
-        year.Size = New Size(38, 65)
+        year.Size = New Size(46, 30)
         year.TabIndex = 11
         year.Text = "*Year"
         year.TextAlign = ContentAlignment.BottomCenter
@@ -210,99 +229,89 @@ Partial Class Form1
         ' 
         program.AutoSize = True
         program.Dock = DockStyle.Left
-        program.Font = New Font("Segoe UI", 9.75F)
-        program.Location = New Point(118, 236)
+        program.Font = New Font("Poppins", 9.75F)
+        program.Location = New Point(117, 110)
         program.Name = "program"
-        program.Size = New Size(64, 65)
+        program.Size = New Size(73, 30)
         program.TabIndex = 10
         program.Text = "*Program"
         program.TextAlign = ContentAlignment.BottomCenter
         ' 
-        ' studentNo
-        ' 
-        studentNo.AutoSize = True
-        studentNo.Dock = DockStyle.Left
-        studentNo.Font = New Font("Segoe UI", 9.75F)
-        studentNo.Location = New Point(3, 236)
-        studentNo.Name = "studentNo"
-        studentNo.Size = New Size(82, 65)
-        studentNo.TabIndex = 9
-        studentNo.Text = "*Student No."
-        studentNo.TextAlign = ContentAlignment.BottomCenter
-        ' 
         ' txtMiddleName
         ' 
         txtMiddleName.Dock = DockStyle.Fill
-        txtMiddleName.Location = New Point(233, 174)
+        txtMiddleName.Font = New Font("Poppins", 9F)
+        txtMiddleName.Location = New Point(231, 83)
         txtMiddleName.Name = "txtMiddleName"
-        txtMiddleName.Size = New Size(109, 23)
+        txtMiddleName.Size = New Size(108, 25)
         txtMiddleName.TabIndex = 7
         ' 
         ' txtFirstName
         ' 
         txtFirstName.Dock = DockStyle.Fill
-        txtFirstName.Location = New Point(118, 174)
+        txtFirstName.Font = New Font("Poppins", 9F)
+        txtFirstName.Location = New Point(117, 83)
         txtFirstName.Name = "txtFirstName"
-        txtFirstName.Size = New Size(109, 23)
+        txtFirstName.Size = New Size(108, 25)
         txtFirstName.TabIndex = 6
         ' 
         ' suffix
         ' 
         suffix.AutoSize = True
-        suffix.Dock = DockStyle.Left
-        suffix.Font = New Font("Segoe UI", 9.75F)
-        suffix.Location = New Point(348, 106)
+        suffix.Dock = DockStyle.Fill
+        suffix.Font = New Font("Poppins", 9.75F)
+        suffix.Location = New Point(345, 50)
         suffix.Name = "suffix"
-        suffix.Size = New Size(39, 65)
+        suffix.Size = New Size(109, 30)
         suffix.TabIndex = 4
         suffix.Text = "Suffix"
-        suffix.TextAlign = ContentAlignment.BottomCenter
+        suffix.TextAlign = ContentAlignment.BottomLeft
         ' 
         ' middleName
         ' 
         middleName.AutoSize = True
-        middleName.Dock = DockStyle.Left
-        middleName.Font = New Font("Segoe UI", 9.75F)
-        middleName.Location = New Point(233, 106)
+        middleName.Dock = DockStyle.Fill
+        middleName.Font = New Font("Poppins", 9.75F)
+        middleName.Location = New Point(231, 50)
         middleName.Name = "middleName"
-        middleName.Size = New Size(88, 65)
+        middleName.Size = New Size(108, 30)
         middleName.TabIndex = 3
         middleName.Text = "Middle Name"
-        middleName.TextAlign = ContentAlignment.BottomCenter
+        middleName.TextAlign = ContentAlignment.BottomLeft
         ' 
         ' firstName
         ' 
         firstName.AutoSize = True
-        firstName.Dock = DockStyle.Left
-        firstName.Font = New Font("Segoe UI", 9.75F)
-        firstName.Location = New Point(118, 106)
+        firstName.Dock = DockStyle.Fill
+        firstName.Font = New Font("Poppins", 9.75F)
+        firstName.Location = New Point(117, 50)
         firstName.Name = "firstName"
-        firstName.Size = New Size(76, 65)
+        firstName.Size = New Size(108, 30)
         firstName.TabIndex = 2
         firstName.Text = "*First Name"
-        firstName.TextAlign = ContentAlignment.BottomCenter
+        firstName.TextAlign = ContentAlignment.BottomLeft
         ' 
         ' lastName
         ' 
         lastName.AutoSize = True
-        lastName.Dock = DockStyle.Left
-        lastName.Font = New Font("Segoe UI", 9.75F)
-        lastName.Location = New Point(3, 106)
+        lastName.Dock = DockStyle.Fill
+        lastName.Font = New Font("Poppins", 9.75F)
+        lastName.Location = New Point(3, 50)
         lastName.Name = "lastName"
-        lastName.Size = New Size(75, 65)
+        lastName.Size = New Size(108, 30)
         lastName.TabIndex = 1
         lastName.Text = "*Last Name"
-        lastName.TextAlign = ContentAlignment.BottomCenter
+        lastName.TextAlign = ContentAlignment.BottomLeft
         ' 
         ' Label1
         ' 
         Label1.AutoSize = True
         TableLayoutPanel1.SetColumnSpan(Label1, 4)
         Label1.Dock = DockStyle.Fill
-        Label1.Font = New Font("Microsoft Sans Serif", 18.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label1.Font = New Font("Pixelify Sans", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label1.Location = New Point(3, 0)
         Label1.Name = "Label1"
-        Label1.Size = New Size(454, 106)
+        Label1.Size = New Size(451, 50)
         Label1.TabIndex = 0
         Label1.Text = "CSD FAIR REGISTRATION"
         Label1.TextAlign = ContentAlignment.MiddleCenter
@@ -310,112 +319,119 @@ Partial Class Form1
         ' txtLastName
         ' 
         txtLastName.Dock = DockStyle.Fill
-        txtLastName.Location = New Point(3, 174)
+        txtLastName.Font = New Font("Poppins", 9F)
+        txtLastName.Location = New Point(3, 83)
         txtLastName.Name = "txtLastName"
-        txtLastName.Size = New Size(109, 23)
+        txtLastName.Size = New Size(108, 25)
         txtLastName.TabIndex = 5
         ' 
         ' cmbSuffix
         ' 
         cmbSuffix.Dock = DockStyle.Fill
         cmbSuffix.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbSuffix.Font = New Font("Poppins", 9F)
         cmbSuffix.FormattingEnabled = True
         cmbSuffix.Items.AddRange(New Object() {"", "Jr.", "Sr.", "III.", "IV.", "V."})
-        cmbSuffix.Location = New Point(348, 174)
+        cmbSuffix.Location = New Point(345, 83)
         cmbSuffix.Name = "cmbSuffix"
-        cmbSuffix.Size = New Size(109, 23)
+        cmbSuffix.Size = New Size(109, 30)
         cmbSuffix.TabIndex = 8
+        ' 
+        ' mtbStudentID
+        ' 
+        mtbStudentID.Font = New Font("Poppins", 9F)
+        mtbStudentID.Location = New Point(3, 142)
+        mtbStudentID.Margin = New Padding(3, 2, 3, 2)
+        mtbStudentID.Mask = "00000000-L"
+        mtbStudentID.Name = "mtbStudentID"
+        mtbStudentID.Size = New Size(108, 25)
+        mtbStudentID.TabIndex = 21
+        ' 
+        ' CheckBox1
+        ' 
+        CheckBox1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
+        CheckBox1.AutoSize = True
+        TableLayoutPanel1.SetColumnSpan(CheckBox1, 2)
+        CheckBox1.Font = New Font("Poppins", 9.75F)
+        CheckBox1.Location = New Point(3, 233)
+        CheckBox1.Name = "CheckBox1"
+        CheckBox1.Size = New Size(204, 31)
+        CheckBox1.TabIndex = 24
+        CheckBox1.Text = "Include Special Characters"
+        CheckBox1.UseVisualStyleBackColor = True
         ' 
         ' Label2
         ' 
         Label2.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         Label2.AutoSize = True
-        TableLayoutPanel1.SetColumnSpan(Label2, 2)
-        Label2.Location = New Point(3, 496)
+        Label2.Location = New Point(670, 239)
         Label2.Name = "Label2"
-        Label2.Size = New Size(224, 67)
+        Label2.Size = New Size(0, 15)
         Label2.TabIndex = 20
         Label2.TextAlign = ContentAlignment.MiddleCenter
-        ' 
-        ' mtbStudentID
-        ' 
-        mtbStudentID.Location = New Point(3, 303)
-        mtbStudentID.Margin = New Padding(3, 2, 3, 2)
-        mtbStudentID.Mask = "00000000-L"
-        mtbStudentID.Name = "mtbStudentID"
-        mtbStudentID.Size = New Size(78, 23)
-        mtbStudentID.TabIndex = 21
         ' 
         ' DataGridView1
         ' 
         DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.Location = New Point(466, 0)
+        DataGridView1.GridColor = SystemColors.ScrollBar
+        DataGridView1.Location = New Point(463, 0)
         DataGridView1.Name = "DataGridView1"
-        DataGridView1.Size = New Size(718, 499)
+        DataGridView1.Size = New Size(618, 229)
         DataGridView1.TabIndex = 1
         ' 
         ' btnRemove
         ' 
-        btnRemove.Location = New Point(466, 505)
+        btnRemove.Font = New Font("Poppins", 9F)
+        btnRemove.Location = New Point(840, 236)
         btnRemove.Name = "btnRemove"
-        btnRemove.Size = New Size(114, 50)
+        btnRemove.Size = New Size(71, 31)
         btnRemove.TabIndex = 2
         btnRemove.Text = "Remove"
         btnRemove.UseVisualStyleBackColor = True
         ' 
         ' btnEdit
         ' 
-        btnEdit.Location = New Point(586, 505)
+        btnEdit.Font = New Font("Poppins", 9F)
+        btnEdit.Location = New Point(917, 236)
         btnEdit.Name = "btnEdit"
-        btnEdit.Size = New Size(114, 50)
+        btnEdit.Size = New Size(75, 31)
         btnEdit.TabIndex = 3
         btnEdit.Text = "Edit"
         btnEdit.UseVisualStyleBackColor = True
         ' 
         ' btnReload
         ' 
-        btnReload.Location = New Point(1070, 504)
+        btnReload.Font = New Font("Poppins", 9F)
+        btnReload.Location = New Point(998, 236)
         btnReload.Name = "btnReload"
-        btnReload.Size = New Size(114, 50)
+        btnReload.Size = New Size(83, 31)
         btnReload.TabIndex = 4
         btnReload.Text = "Reload"
         btnReload.UseVisualStyleBackColor = True
         ' 
-        ' btnSave
-        ' 
-        btnSave.Location = New Point(706, 505)
-        btnSave.Name = "btnSave"
-        btnSave.Size = New Size(114, 50)
-        btnSave.TabIndex = 5
-        btnSave.Text = "Save"
-        btnSave.UseVisualStyleBackColor = True
-        ' 
         ' Form1
         ' 
-        AcceptButton = btnRegister
-        AutoScaleDimensions = New SizeF(96.0F, 96.0F)
+        AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         AutoSize = True
-        CancelButton = btnClear
-        ClientSize = New Size(1184, 561)
-        Controls.Add(btnSave)
+        ClientSize = New Size(1084, 270)
         Controls.Add(btnReload)
         Controls.Add(btnEdit)
         Controls.Add(btnRemove)
         Controls.Add(DataGridView1)
         Controls.Add(TableLayoutPanel1)
+        Controls.Add(Label2)
+        Icon = CType(resources.GetObject("$this.Icon"), Icon)
         KeyPreview = True
         MaximizeBox = False
-        MaximumSize = New Size(1200, 600)
-        MinimumSize = New Size(1200, 600)
         Name = "Form1"
-        ShowIcon = False
         StartPosition = FormStartPosition.CenterScreen
         Text = "Registration Form"
         TableLayoutPanel1.ResumeLayout(False)
         TableLayoutPanel1.PerformLayout()
         CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
+        PerformLayout()
     End Sub
 
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
@@ -424,10 +440,8 @@ Partial Class Form1
     Friend WithEvents suffix As Label
     Friend WithEvents middleName As Label
     Friend WithEvents firstName As Label
-    Friend WithEvents lastName As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents txtLastName As TextBox
-    Friend WithEvents studentNo As Label
     Friend WithEvents cmbSuffix As ComboBox
     Friend WithEvents cmbSection As ComboBox
     Friend WithEvents cmbYear As ComboBox
@@ -437,14 +451,16 @@ Partial Class Form1
     Friend WithEvents program As Label
     Friend WithEvents cmbCategory As ComboBox
     Friend WithEvents category As Label
-    Friend WithEvents btnClear As Button
     Friend WithEvents Label2 As Label
     Friend WithEvents mtbStudentID As MaskedTextBox
-    Friend WithEvents btnRegister As Button
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents btnRemove As Button
     Friend WithEvents btnEdit As Button
     Friend WithEvents btnReload As Button
-    Friend WithEvents btnSave As Button
+    Friend WithEvents Label3 As Label
+    Friend WithEvents lastName As Label
+    Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents btnClear As Button
+    Friend WithEvents btnRegister As Button
 
 End Class

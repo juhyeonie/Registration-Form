@@ -221,17 +221,20 @@ Partial Class EditStudentForm
         ' txtMiddleName
         ' 
         txtMiddleName.Dock = DockStyle.Fill
+        txtMiddleName.Font = New Font("Poppins", 9.75F)
         txtMiddleName.Location = New Point(225, 91)
         txtMiddleName.Name = "txtMiddleName"
-        txtMiddleName.Size = New Size(105, 23)
+        txtMiddleName.Size = New Size(105, 27)
         txtMiddleName.TabIndex = 7
+        txtMiddleName.TabStop = False
         ' 
         ' txtFirstName
         ' 
         txtFirstName.Dock = DockStyle.Fill
+        txtFirstName.Font = New Font("Poppins", 9.75F)
         txtFirstName.Location = New Point(114, 91)
         txtFirstName.Name = "txtFirstName"
-        txtFirstName.Size = New Size(105, 23)
+        txtFirstName.Size = New Size(105, 27)
         txtFirstName.TabIndex = 6
         ' 
         ' suffix
@@ -298,21 +301,22 @@ Partial Class EditStudentForm
         ' txtLastName
         ' 
         txtLastName.Dock = DockStyle.Fill
+        txtLastName.Font = New Font("Poppins", 9.75F)
         txtLastName.Location = New Point(3, 91)
         txtLastName.Name = "txtLastName"
-        txtLastName.Size = New Size(105, 23)
+        txtLastName.Size = New Size(105, 27)
         txtLastName.TabIndex = 5
         ' 
         ' cmbSuffix
         ' 
         cmbSuffix.Dock = DockStyle.Fill
         cmbSuffix.DropDownStyle = ComboBoxStyle.DropDownList
-        cmbSuffix.Font = New Font("Poppins", 9F)
+        cmbSuffix.Font = New Font("Poppins", 9.75F)
         cmbSuffix.FormattingEnabled = True
         cmbSuffix.Items.AddRange(New Object() {"", "Jr.", "Sr.", "III.", "IV.", "V."})
         cmbSuffix.Location = New Point(336, 91)
         cmbSuffix.Name = "cmbSuffix"
-        cmbSuffix.Size = New Size(105, 30)
+        cmbSuffix.Size = New Size(105, 31)
         cmbSuffix.TabIndex = 8
         ' 
         ' Label2
@@ -327,21 +331,21 @@ Partial Class EditStudentForm
         ' 
         ' mtbStudentID
         ' 
-        mtbStudentID.Font = New Font("Poppins", 9F)
+        mtbStudentID.Font = New Font("Poppins", 9.75F)
         mtbStudentID.Location = New Point(3, 156)
         mtbStudentID.Margin = New Padding(3, 2, 3, 2)
         mtbStudentID.Mask = "00000000-L"
         mtbStudentID.Name = "mtbStudentID"
-        mtbStudentID.Size = New Size(105, 25)
+        mtbStudentID.Size = New Size(105, 27)
         mtbStudentID.TabIndex = 21
         ' 
         ' CheckBox1
         ' 
-        CheckBox1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
+        CheckBox1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Right
         CheckBox1.AutoSize = True
         TableLayoutPanel1.SetColumnSpan(CheckBox1, 2)
         CheckBox1.Font = New Font("Poppins", 9F)
-        CheckBox1.Location = New Point(3, 256)
+        CheckBox1.Location = New Point(32, 256)
         CheckBox1.Name = "CheckBox1"
         CheckBox1.Size = New Size(187, 32)
         CheckBox1.TabIndex = 25
@@ -350,12 +354,14 @@ Partial Class EditStudentForm
         ' 
         ' EditStudentForm
         ' 
+        AcceptButton = btnSave
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = SystemColors.InactiveBorder
         ClientSize = New Size(444, 291)
         Controls.Add(TableLayoutPanel1)
         Icon = CType(resources.GetObject("$this.Icon"), Icon)
+        KeyPreview = True
         Name = "EditStudentForm"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Edit Form"

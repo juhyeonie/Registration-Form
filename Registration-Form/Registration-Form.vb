@@ -1,22 +1,31 @@
-﻿Imports System.Data.OleDb
+﻿'Imports System.Data.OleDb
 Imports System.Reflection.Emit
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel
+Imports MySql.Data.MySqlClient
 
 Public Class Form1
-    Dim ConnectionString As String = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Eisen\OneDrive\Documents\FormRegistration.accdb"
-    Dim conn As New OleDbConnection(ConnectionString)
+    'Dim ConnectionString As String = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Eisen\OneDrive\Documents\FormRegistration.accdb"
+    Dim ConnectionString As String = "server=localhost;port=3307;user id=root;password=;database=formreg"
+    'Dim conn As New MySQLConnection(ConnectionString)
+    Dim conn As New MySqlConnection(ConnectionString)
     Private AllowSpecialChars As Boolean = False
     Public Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         mtbStudentID.Select(0, 0)
         LoadStudentData()
         DataGridView1.ReadOnly = True
         DataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        lbResult.Text = ""
+        btnClear.Enabled = False
+        Me.ActiveControl = Nothing
     End Sub
 
     Private Function IsValidName(input As String) As Boolean
+        If input.Trim().Length < 2 Then
+            Return False
+        End If
+
         If AllowSpecialChars Then
-            ' If checkbox is checked, allow ANY characters (still disallow empty string)
-            Return input.Trim() <> ""
+            Return True
         Else
             ' Default: only letters, spaces, hyphens, and apostrophes
             For Each ch As Char In input
@@ -29,77 +38,131 @@ Public Class Form1
     End Function
 
     Private Sub btnRegister_Click(sender As Object, e As EventArgs) Handles btnRegister.Click
+        lbResult.ForeColor = Color.Gray
         ' Basic empty field validation
-        If txtFirstName.Text.Trim = "" OrElse txtLastName.Text.Trim = "" OrElse mtbStudentID.Text.Trim = "" OrElse cmbProgram.Text.Trim = "" OrElse cmbYear.Text.Trim = "" OrElse cmbSection.Text.Trim = "" Then
+        If txtFirstName.Text.Trim = "" OrElse txtLastName.Text.Trim = "" OrElse
+       mtbStudentID.Text.Trim = "" OrElse cmbProgram.Text.Trim = "" OrElse
+       cmbYear.Text.Trim = "" OrElse cmbSection.Text.Trim = "" Then
+            'lbResult.Text = "Please fill in all the required fields."
             MessageBox.Show("Please fill in all the required fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            lblFirstName.ForeColor = If(txtFirstName.Text.Trim = "", Color.Red, Color.Black)
+            lblLastName.ForeColor = If(txtLastName.Text.Trim = "", Color.Red, Color.Black)
+            If String.IsNullOrWhiteSpace(mtbStudentID.Text.Trim()) OrElse Not mtbStudentID.MaskCompleted Then
+                lblStudNo.ForeColor = Color.Red
+            Else
+                lblStudNo.ForeColor = Color.Black
+            End If
+            lblProgram.ForeColor = If(cmbProgram.Text.Trim = "", Color.Red, Color.Black)
+            lblYear.ForeColor = If(cmbYear.Text.Trim = "", Color.Red, Color.Black)
+            lblSection.ForeColor = If(cmbSection.Text.Trim = "", Color.Red, Color.Black)
+            lblCategory.ForeColor = If(cmbCategory.Text.Trim = "", Color.Red, Color.Black)
             Return
         End If
 
-        ' Validate name fields
-        If Not IsValidName(txtFirstName.Text) Then
-            MessageBox.Show("First name is not valid based on current validation rules.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            txtFirstName.Focus()
+        ' Ensure MaskedTextBox is completely filled
+        If Not mtbStudentID.MaskCompleted Then
+            'lbResult.Text = "Please complete the Student ID in the required format."
+            MessageBox.Show("Please complete the Student ID in the required format.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            mtbStudentID.Focus()
             Return
         End If
 
+        ' Name field validation
         If Not IsValidName(txtLastName.Text) Then
-            MessageBox.Show("Last name is not valid based on current validation rules.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            'lbResult.Text = "Invalid Last Name."
+            MessageBox.Show("Last name must be at least 2 characters.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             txtLastName.Focus()
             Return
         End If
 
+        If Not IsValidName(txtFirstName.Text) Then
+            'lbResult.Text = "Invalid First Name."
+            MessageBox.Show("First name must be at least 2 characters.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txtFirstName.Focus()
+            Return
+        End If
+
+        ' Middle Name validation (optional, but must be at least 2 characters if provided)
+        If txtMiddleName.Text.Trim <> "" Then
+            If txtMiddleName.Text.Trim.Length < 2 OrElse Not IsValidName(txtMiddleName.Text) Then
+                MessageBox.Show("Invalid Middle Name. Must be at least 2 characters if provided.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                'lbResult.Text = "Invalid Middle Name. Must be at least 2 characters if provided."
+                txtMiddleName.Focus()
+                Return
+            End If
+        End If
+
         ' Check if StudentID already exists
-        Using conn As New OleDbConnection(ConnectionString)
+        Using conn As New MySqlConnection(ConnectionString)
             conn.Open()
             Dim queryCheck = "SELECT COUNT(*) FROM CSD WHERE StudentID = @StudentID"
-            Using cmd As New OleDbCommand(queryCheck, conn)
+            Using cmd As New MySqlCommand(queryCheck, conn)
                 cmd.Parameters.AddWithValue("@StudentID", mtbStudentID.Text)
                 Dim count = Convert.ToInt32(cmd.ExecuteScalar)
                 If count > 0 Then
-                    Label2.Text = "Student ID already exists."
+                    MessageBox.Show("Student ID already exists.", "Duplicate Entry", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    'lbResult.Text = "Student ID already exists."
+                    'lbResult.ForeColor = Color.Gray
                     Return
                 End If
             End Using
         End Using
 
-        ' Insert new record
+        ' New record
         Try
-            Using conn As New OleDbConnection(ConnectionString)
+            Using conn As New MySqlConnection(ConnectionString)
                 conn.Open()
-                Dim queryInsert = "INSERT INTO CSD ([StudentID], [FirstName], [LastName], [MiddleName], [Suffix], [Program], [YearLevel], [Section], [Category]) VALUES (@StudentID, @FirstName, @LastName, @MiddleName, @Suffix, @Program, @YearLevel, @Section, @Category)"
 
-                Using cmd As New OleDbCommand(queryInsert, conn)
-                    ' Add parameters in SAME ORDER as query
-                    cmd.Parameters.AddWithValue("@StudentID", mtbStudentID.Text.ToUpper)
-                    cmd.Parameters.AddWithValue("@FirstName", txtFirstName.Text.ToUpper)
-                    cmd.Parameters.AddWithValue("@LastName", txtLastName.Text.ToUpper)
-                    cmd.Parameters.AddWithValue("@MiddleName", txtMiddleName.Text.ToUpper)
+                Dim queryInsert = "INSERT INTO CSD (StudentID, FirstName, LastName, MiddleName, Suffix, Program, YearLevel, Section, Category) " &
+                                  "VALUES (@StudentID, @FirstName, @LastName, @MiddleName, @Suffix, @Program, @YearLevel, @Section, @Category)"
+
+                Using cmd As New MySqlCommand(queryInsert, conn)
+                    ' Add parameters
+                    cmd.Parameters.AddWithValue("@StudentID", mtbStudentID.Text.ToUpper())
+                    cmd.Parameters.AddWithValue("@FirstName", txtFirstName.Text.ToUpper())
+                    cmd.Parameters.AddWithValue("@LastName", txtLastName.Text.ToUpper())
+
+                    ' Handle optional MiddleName (insert empty string if none)
+                    Dim middleNameValue As String = txtMiddleName.Text.Trim()
+                    If middleNameValue.Length > 1 Then
+                        cmd.Parameters.AddWithValue("@MiddleName", middleNameValue.ToUpper())
+                    Else
+                        cmd.Parameters.AddWithValue("@MiddleName", "")
+                    End If
+
+
                     cmd.Parameters.AddWithValue("@Suffix", cmbSuffix.Text)
                     cmd.Parameters.AddWithValue("@Program", cmbProgram.Text)
                     cmd.Parameters.AddWithValue("@YearLevel", cmbYear.Text)
                     cmd.Parameters.AddWithValue("@Section", cmbSection.Text)
                     cmd.Parameters.AddWithValue("@Category", cmbCategory.Text)
 
-                    ' Dim debugSql = queryInsert
-                    'For Each p As OleDbParameter In cmd.Parameters
-                    'debugSql = debugSql.Replace(p.ParameterName, "'" & p.Value.ToString & "'")
-                    'Next
-                    'MessageBox.Show(debugSql)
-
-
-                    Dim row = cmd.ExecuteNonQuery
+                    Dim row = cmd.ExecuteNonQuery()
 
                     If row > 0 Then
-                        Label2.Text = "Registration Completed!"
+                        MessageBox.Show("Registration Completed!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        'lbResult.Text = "Registration Completed!"
+                        'lbResult.ForeColor = Color.ForestGreen
                     Else
-                        Label2.Text = "Registration Failed"
+                        MessageBox.Show("Registration Failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        'lbResult.Text = "Registration Failed"
+                        'lbResult.ForeColor = Color.IndianRed
                     End If
                 End Using
             End Using
+
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message & vbCrLf & ex.StackTrace)
         End Try
         LoadStudentData()
+        lblStudNo.ForeColor = Color.Black
+        lblFirstName.ForeColor = Color.Black
+        lblLastName.ForeColor = Color.Black
+        lblProgram.ForeColor = Color.Black
+        lblYear.ForeColor = Color.Black
+        lblSection.ForeColor = Color.Black
+        lblCategory.ForeColor = Color.Black
+
         txtFirstName.Text = ""
         txtLastName.Text = ""
         txtMiddleName.Text = ""
@@ -122,18 +185,19 @@ Public Class Form1
         cmbSection.SelectedIndex = -1
         cmbSuffix.SelectedIndex = -1
         cmbCategory.SelectedIndex = -1
-        Label2.Text = ""
+        lbResult.Text = "Cleared"
     End Sub
 
     Private Sub LoadStudentData()
         Try
             conn.Open()
-            Dim sql As String = "SELECT StudentID, " &
-                                "(FirstName & ' ' & MiddleName & ' ' & LastName & ' ' & Suffix) AS FullName, " &
-                                "Program, YearLevel AS [Year], Section, Category " &
-                                "FROM CSD"
+            Dim sql As String = "SELECT StudentID AS `Student ID`, " &
+                    "CONCAT(FirstName, ' ', MiddleName, ' ', LastName, ' ', Suffix) AS `Full Name`, " &
+                    "Program, YearLevel AS `Year`, Section, Category " &
+                    "FROM CSD"
 
-            Dim adapter As New OleDbDataAdapter(sql, conn)
+
+            Dim adapter As New MySqlDataAdapter(sql, conn)
             Dim dt As New DataTable()
             adapter.Fill(dt)
 
@@ -143,9 +207,9 @@ Public Class Form1
             DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
             DataGridView1.AutoResizeColumns()
 
-            ' Adjust column widths (remove old FirstName/MiddleName/LastName since now it’s combined)
-            DataGridView1.Columns("StudentID").FillWeight = 100
-            DataGridView1.Columns("FullName").FillWeight = 200
+            ' Adjust column widths
+            DataGridView1.Columns("Student ID").FillWeight = 90
+            DataGridView1.Columns("Full Name").FillWeight = 220
             DataGridView1.Columns("Program").FillWeight = 80
             DataGridView1.Columns("Year").FillWeight = 40
             DataGridView1.Columns("Section").FillWeight = 60
@@ -168,7 +232,7 @@ Public Class Form1
     '  Remove Button
     Private Sub btnRemove_Click(sender As Object, e As EventArgs) Handles btnRemove.Click
         If DataGridView1.SelectedRows.Count > 0 Then
-            Dim studentID As String = DataGridView1.SelectedRows(0).Cells("StudentID").Value.ToString()
+            Dim studentID As String = DataGridView1.SelectedRows(0).Cells("Student ID").Value.ToString()
 
             Dim result = MessageBox.Show("Are you sure you want to delete this record?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
@@ -176,8 +240,8 @@ Public Class Form1
                 Try
                     conn.Open()
                     Dim sql As String = "DELETE FROM CSD WHERE StudentID = ?"
-                    Dim cmd As New OleDbCommand(sql, conn)
-                    cmd.Parameters.Add("?", OleDbType.VarChar).Value = studentID
+                    Dim cmd As New MySqlCommand(sql, conn)
+                    cmd.Parameters.Add("?", MySqlDbType.VarChar).Value = studentID
                     cmd.ExecuteNonQuery()
                     MessageBox.Show("Record deleted successfully.")
 
@@ -204,7 +268,7 @@ Public Class Form1
         End If
 
         ' Get the StudentID of the selected row
-        Dim studentID As String = DataGridView1.SelectedRows(0).Cells("StudentID").Value.ToString()
+        Dim studentID As String = DataGridView1.SelectedRows(0).Cells("Student ID").Value.ToString()
 
         ' Open EditStudentForm and pass the StudentID
         Dim editForm As New EditStudentForm(studentID)
@@ -240,19 +304,30 @@ Public Class Form1
                     Continue For
                 End If
 
-                Dim sql = "UPDATE CSD SET [FirstName]=?, [LastName]=?, [MiddleName]=?, [Suffix]=?, [Program]=?, [YearLevel]=?, [Section]=?, [Category]=? WHERE [StudentID]=?"
-                Using cmd As New OleDbCommand(sql, conn)
-                    cmd.Parameters.Add("?", OleDbType.VarChar).Value = firstName
-                    cmd.Parameters.Add("?", OleDbType.VarChar).Value = lastName
-                    cmd.Parameters.Add("?", OleDbType.VarChar).Value = middleName
-                    cmd.Parameters.Add("?", OleDbType.VarChar).Value = suffix
-                    cmd.Parameters.Add("?", OleDbType.VarChar).Value = program
-                    cmd.Parameters.Add("?", OleDbType.VarChar).Value = yearLevel
-                    cmd.Parameters.Add("?", OleDbType.VarChar).Value = section
-                    cmd.Parameters.Add("?", OleDbType.VarChar).Value = category
-                    cmd.Parameters.Add("?", OleDbType.VarChar).Value = studentID
+                Dim sql As String = "UPDATE CSD SET " &
+                    "FirstName=@FirstName, " &
+                    "LastName=@LastName, " &
+                    "MiddleName=@MiddleName, " &
+                    "Suffix=@Suffix, " &
+                    "Program=@Program, " &
+                    "YearLevel=@YearLevel, " &
+                    "Section=@Section, " &
+                    "Category=@Category " &
+                    "WHERE StudentID=@StudentID"
+
+                Using cmd As New MySqlCommand(sql, conn)
+                    cmd.Parameters.Add("@FirstName", MySqlDbType.VarChar).Value = firstName
+                    cmd.Parameters.Add("@LastName", MySqlDbType.VarChar).Value = lastName
+                    cmd.Parameters.Add("@MiddleName", MySqlDbType.VarChar).Value = middleName
+                    cmd.Parameters.Add("@Suffix", MySqlDbType.VarChar).Value = suffix
+                    cmd.Parameters.Add("@Program", MySqlDbType.VarChar).Value = program
+                    cmd.Parameters.Add("@YearLevel", MySqlDbType.VarChar).Value = yearLevel
+                    cmd.Parameters.Add("@Section", MySqlDbType.VarChar).Value = section
+                    cmd.Parameters.Add("@Category", MySqlDbType.VarChar).Value = category
+                    cmd.Parameters.Add("@StudentID", MySqlDbType.VarChar).Value = studentID
                     cmd.ExecuteNonQuery()
                 End Using
+
             Next
 
             MessageBox.Show("All records updated successfully.")
@@ -271,4 +346,41 @@ Public Class Form1
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
         AllowSpecialChars = CheckBox1.Checked
     End Sub
+
+    ' Call this whenever a field changes
+    Private Sub CheckIfFieldsHaveInput()
+        ' Check if ANY field has input
+        If txtFirstName.Text.Trim <> "" OrElse
+       txtLastName.Text.Trim <> "" OrElse
+       txtMiddleName.Text.Trim <> "" OrElse
+       mtbStudentID.Text.Trim <> "" OrElse
+       cmbProgram.SelectedIndex <> -1 OrElse
+       cmbYear.SelectedIndex <> -1 OrElse
+       cmbSection.SelectedIndex <> -1 OrElse
+       cmbCategory.SelectedIndex <> -1 OrElse
+       cmbSuffix.SelectedIndex <> -1 Then
+
+            btnClear.Enabled = True
+        Else
+            btnClear.Enabled = False
+        End If
+    End Sub
+
+    Private Sub txtFirstName_TextChanged(sender As Object, e As EventArgs) Handles txtFirstName.TextChanged,
+                                                                              txtLastName.TextChanged,
+                                                                              txtMiddleName.TextChanged,
+                                                                              mtbStudentID.TextChanged
+        CheckIfFieldsHaveInput()
+    End Sub
+
+    Private Sub cmb_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbProgram.SelectedIndexChanged,
+                                                                                cmbYear.SelectedIndexChanged,
+                                                                                cmbSection.SelectedIndexChanged,
+                                                                                cmbCategory.SelectedIndexChanged,
+                                                                                cmbSuffix.SelectedIndexChanged
+        CheckIfFieldsHaveInput()
+    End Sub
+
+
+
 End Class
